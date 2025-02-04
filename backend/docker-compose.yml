@@ -3,8 +3,9 @@ services:
   mysql:
     image: mysql:latest
     restart: unless-stopped
+    container_name: ifood-test-db
     environment:
-      MYSQL_DATABASE: to-do-dash
+      MYSQL_DATABASE: ifood-test-db
       MYSQL_ROOT_PASSWORD: 123
     ports:
       - '3306:3306'
@@ -12,8 +13,8 @@ services:
     build:
       dockerfile: Dockerfile
       context: .
-    image: to-do-dash:latest
-    container_name: to-do-dash
+    image: ifood-test-backend:latest
+    container_name: ifood-test-backend
     restart: unless-stopped
     ports:
       - 3000:3000
