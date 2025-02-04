@@ -1,0 +1,49 @@
+version: "3.1"
+services:
+  database:
+    image: mysql:latest
+    restart: unless-stopped
+    container_name: ifood-test-db
+    environment:
+      MYSQL_DATABASE: ifood-test-db
+      MYSQL_ROOT_PASSWORD: 123
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  backend:
+    build: ./backend/
+    image: ifood-test-backend:latest
+    container_name: ifood-test-backend
+    restart: unless-stopped
+    depends_on:
+      database:
+        condition: service_healthy
+    environment:
+      - DB_HOST=database
+      - DB_PORT=3306
+      - DB_PASSWORD=123
+      - DB_DATABASE=ifood-test-db
+    ports:
+      - 3000:3000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 30s
+      retries: 10
+    command: ["sh", "-c", "npx prisma generate && npx prisma migrate dev"]
+
+  frontend:
+    build: ./frontend/
+    image: ifood-test-frontend:latest
+    container_name: ifood-test-frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - 8080:8080
