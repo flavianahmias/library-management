@@ -1,0 +1,20 @@
+version: '3.1'
+services:
+  mysql:
+    image: mysql:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: to-do-dash
+      MYSQL_ROOT_PASSWORD: 123
+    ports:
+      - '3306:3306'
+  app:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    image: to-do-dash:latest
+    container_name: to-do-dash
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    command: npm run start:dev
