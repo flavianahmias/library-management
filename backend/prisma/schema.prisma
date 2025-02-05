@@ -28,4 +28,25 @@ model User {
   loginAt   DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @default(now()) @updatedAt
+  history   History[]
+}
+
+model Book {
+  id        Int       @id @default(autoincrement())
+  status    Int
+  name      String
+  author    String?
+  value     Float
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  history   History[]
+}
+
+model History {
+  id     Int  @id @default(autoincrement())
+  type   Int
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+  bookId Int
+  book   Book @relation(fields: [bookId], references: [id])
 }

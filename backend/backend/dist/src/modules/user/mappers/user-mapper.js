@@ -9,7 +9,7 @@ class UserMapper {
             email: raw.email,
             role: raw.role,
             password: raw.password,
-            isActive: false,
+            isActive: raw.isActive,
         }, {
             id: raw.id,
             createdAt: raw.createdAt,
