@@ -1,12 +1,13 @@
 import { Entity, EntityMetadata } from 'src/shared/core/entity';
 import { BookStatusEnum } from '../enums/book-status.enum';
+import { History } from 'src/modules/history/domain/history';
 
 interface BookProps {
   status: BookStatusEnum;
   name: string;
   author: string;
   value: number;
-  history?: [];
+  history?: History[];
 }
 
 export class Book extends Entity<BookProps> {
@@ -48,5 +49,13 @@ export class Book extends Entity<BookProps> {
 
   set value(value: number) {
     this.props.value = value;
+  }
+
+  get history() {
+    return this.props.history;
+  }
+
+  set history(history: History[]) {
+    this.props.history.push(history[0]);
   }
 }

@@ -13,19 +13,30 @@ import { RentBookService } from './use-cases/rent-book/rent-book.service';
 import { RentBookController } from './use-cases/rent-book/rent-book.controller';
 import { ReturnBookController } from './use-cases/return-book/return-book.controller';
 import { ReturnBookService } from './use-cases/return-book/return-book.service';
+import { UserRepoService } from '../user/repositories/prisma/user-repo';
+import { UserModule } from '../user/user.module';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [PrismaModule, UserModule],
   providers: [
     CreateBookService,
     BookRepoService,
     { provide: 'IBookRepo', useExisting: BookRepoService },
+    UserRepoService,
+    { provide: 'IUserRepo', useExisting: UserRepoService },
     EditBookService,
     ListBooksService,
     GetBookService,
     RentBookService,
     ReturnBookService,
   ],
-  controllers: [CreateBookController, GetBookController, EditBookController, ListBooksController, RentBookController, ReturnBookController],
+  controllers: [
+    CreateBookController,
+    GetBookController,
+    EditBookController,
+    ListBooksController,
+    RentBookController,
+    ReturnBookController,
+  ],
 })
 export class BookModule {}

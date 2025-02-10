@@ -1,3 +1,4 @@
+import { HistoryDTO } from 'src/modules/history/dtos/history.dto';
 import { BookStatusEnum } from '../enums/book-status.enum';
 
 export interface BookDTO {
@@ -8,5 +9,5 @@ export interface BookDTO {
   value: number;
   createdAt: Date;
   updatedAt: Date;
-  history?: [];
+  history?: HistoryDTO[];
 }

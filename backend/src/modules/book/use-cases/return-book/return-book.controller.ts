@@ -22,7 +22,7 @@ export class ReturnBookController {
   async execute(@Param('id', ParseIntPipe) id: number, @Req() req) {
     const result = await this.service.execute({
       bookId: id,
-      userName: req.user.name,
+      userId: req.user.id,
     });
     return { data: BookMapper.toDTO(result) };
   }
