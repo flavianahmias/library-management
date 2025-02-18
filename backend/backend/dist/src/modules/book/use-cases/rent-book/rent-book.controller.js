@@ -25,7 +25,7 @@ let RentBookController = class RentBookController {
     async execute(id, req) {
         const result = await this.service.execute({
             bookId: id,
-            userName: req.user.name,
+            userId: req.user.id,
         });
         return { data: book_mapper_1.BookMapper.toDTO(result) };
     }

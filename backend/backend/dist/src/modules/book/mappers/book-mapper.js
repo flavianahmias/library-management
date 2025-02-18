@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BookMapper = void 0;
 const book_1 = require("../domain/book");
+const history_mapper_1 = require("../../history/mappers/history-mapper");
 class BookMapper {
     static toDomain(raw) {
         return book_1.Book.create({
@@ -9,6 +10,7 @@ class BookMapper {
             status: raw.status,
             author: raw.author,
             value: raw.value,
+            history: raw.history && raw.history.map(history_mapper_1.HistoryMapper.toDomain),
         }, {
             id: raw.id,
             createdAt: raw.createdAt,
@@ -22,6 +24,7 @@ class BookMapper {
             status: d.status,
             author: d.author,
             value: d.value,
+            history: d.history && d.history.map(history_mapper_1.HistoryMapper.toDTO),
             createdAt: d.createdAt,
             updatedAt: d.updatedAt,
         };

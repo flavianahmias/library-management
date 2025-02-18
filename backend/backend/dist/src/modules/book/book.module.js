@@ -22,23 +22,34 @@ const rent_book_service_1 = require("./use-cases/rent-book/rent-book.service");
 const rent_book_controller_1 = require("./use-cases/rent-book/rent-book.controller");
 const return_book_controller_1 = require("./use-cases/return-book/return-book.controller");
 const return_book_service_1 = require("./use-cases/return-book/return-book.service");
+const user_repo_1 = require("../user/repositories/prisma/user-repo");
+const user_module_1 = require("../user/user.module");
 let BookModule = class BookModule {
 };
 exports.BookModule = BookModule;
 exports.BookModule = BookModule = __decorate([
     (0, common_1.Module)({
-        imports: [prisma_module_1.PrismaModule],
+        imports: [prisma_module_1.PrismaModule, user_module_1.UserModule],
         providers: [
             create_book_service_1.CreateBookService,
             book_repo_1.BookRepoService,
             { provide: 'IBookRepo', useExisting: book_repo_1.BookRepoService },
+            user_repo_1.UserRepoService,
+            { provide: 'IUserRepo', useExisting: user_repo_1.UserRepoService },
             edit_book_service_1.EditBookService,
             list_books_service_1.ListBooksService,
             get_book_service_1.GetBookService,
             rent_book_service_1.RentBookService,
             return_book_service_1.ReturnBookService,
         ],
-        controllers: [create_book_controller_1.CreateBookController, get_book_controller_1.GetBookController, edit_book_controller_1.EditBookController, list_books_controller_1.ListBooksController, rent_book_controller_1.RentBookController, return_book_controller_1.ReturnBookController],
+        controllers: [
+            create_book_controller_1.CreateBookController,
+            get_book_controller_1.GetBookController,
+            edit_book_controller_1.EditBookController,
+            list_books_controller_1.ListBooksController,
+            rent_book_controller_1.RentBookController,
+            return_book_controller_1.ReturnBookController,
+        ],
     })
 ], BookModule);
 //# sourceMappingURL=book.module.js.map

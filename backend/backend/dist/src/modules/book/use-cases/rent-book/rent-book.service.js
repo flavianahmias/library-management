@@ -15,14 +15,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RentBookService = void 0;
 const common_1 = require("@nestjs/common");
 const book_status_enum_1 = require("../../enums/book-status.enum");
+const history_1 = require("../../../history/domain/history");
+const history_type_enum_1 = require("../../../history/enums/history-type.enum");
 let RentBookService = class RentBookService {
-    constructor(bookRepo) {
+    constructor(bookRepo, userRepo) {
         this.bookRepo = bookRepo;
+        this.userRepo = userRepo;
     }
     async execute(input) {
+        const user = await this.userRepo.findOne({ id: { equals: input.userId } });
         const book = await this.bookRepo.findOne({ id: { equals: input.bookId } });
-        console.log(input.userName);
         book.status = book_status_enum_1.BookStatusEnum.Rent;
+        book.history = [
+            history_1.History.create({
+                book: book,
+                type: history_type_enum_1.HistoryTypeEnum.Rented,
+                user: user,
+            }),
+        ];
         const result = await this.bookRepo.update(book);
         return result;
     }
@@ -31,6 +41,7 @@ exports.RentBookService = RentBookService;
 exports.RentBookService = RentBookService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, common_1.Inject)('IBookRepo')),
-    __metadata("design:paramtypes", [Object])
+    __param(1, (0, common_1.Inject)('IUserRepo')),
+    __metadata("design:paramtypes", [Object, Object])
 ], RentBookService);
 //# sourceMappingURL=rent-book.service.js.map

@@ -33,6 +33,12 @@ class Book extends entity_1.Entity {
     set value(value) {
         this.props.value = value;
     }
+    get history() {
+        return this.props.history;
+    }
+    set history(history) {
+        this.props.history.push(history[0]);
+    }
 }
 exports.Book = Book;
 //# sourceMappingURL=book.js.map
